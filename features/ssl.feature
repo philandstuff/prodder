@@ -11,8 +11,16 @@ Feature: SSL
     Then the exit status should be 0
     And the output should contain "SSLv2 disabled"
 
-  Scenario: Check certificate is trusted
-    When we check the certificate
+  Scenario: Check certificate is trusted under SNI
+    When we check the certificate using SNI
+    Then the output should contain "Certificate is Trusted"
+    And the output should contain "OK - Common Name Matches"
+    And the output should not contain "Signature Algorithm:               md5"
+    And the output should not contain "Signature Algorithm:               md2"
+    And the output should contain "Key Size:                          2048"
+
+  Scenario: Check certificate is trusted without SNI
+    When we check the certificate without using SNI
     Then the output should contain "Certificate is Trusted"
     And the output should contain "OK - Common Name Matches"
     And the output should not contain "Signature Algorithm:               md5"

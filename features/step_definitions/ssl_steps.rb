@@ -7,7 +7,12 @@ When(/^we test using the "(.*?)" protocol$/) do |protocol|
   step("the exit status should be 0")
 end
 
-When(/^we check the certificate$/) do
+When(/^we check the certificate using SNI$/) do
+  step("I run `sslyze.py --sni=#{ENV['HOST']} --certinfo=basic #{ENV['HOST']}`")
+  step("the exit status should be 0")
+end
+
+When(/^we check the certificate without using SNI$/) do
   step("I run `sslyze.py --certinfo=basic #{ENV['HOST']}`")
   step("the exit status should be 0")
 end
